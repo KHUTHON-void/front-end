@@ -22,7 +22,7 @@ const WriteRecruitModal = ({ setIsModalOpen, name, token}) => {
       const content = editorlns.getHTML();
       const postData = {
         "title" : title,
-        "content" : content,
+        "content" : JSON.stringify(content),
         "category" : activeFilter,
       }
     if (content === POST_IS_EMPTY) {

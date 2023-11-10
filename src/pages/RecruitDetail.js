@@ -110,7 +110,7 @@ const RecruitDetail = () => {
           </AuthorLine>
         </DiaryHeader>
         <DiaryBody>
-          <DiaryContent>{post.content}</DiaryContent>
+          <DiaryContent>선생님을 구합니다~</DiaryContent>
         </DiaryBody>
         <DiaryCommentContainer>
           <CommentInputOutlay>

@@ -8,9 +8,10 @@ import { ReactComponent as BookmarkIcon } from "../assets/flag.svg";
 import { ReactComponent as WriteIcon } from "../assets/pen.svg";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import WriteRecruitModal from "../components/WriteRecruitModal";
-import { DiaryList } from "../store/fakeData";
-import Filtering from "../components/Filtering";
+import WriteRecruitModal from '../components/WriteRecruitModal'
+import { DiaryList } from '../store/fakeData'
+import Filtering from '../components/Filtering'
+import SearchBar from '../components/SearchBar'
 
 const Recruit = () => {
   const navigate = useNavigate();
@@ -55,50 +56,43 @@ const Recruit = () => {
       </WritePostButton>
       <BodyContainer>
         <Sidebar></Sidebar>
+        <SearchBarContainer>
+          <SearchBar
+              width="600px"
+              height="44px"
+              fontSize="21px"
+              placeholder="검색할 내용을 입력하세요"
+              value={searchContent}
+              onChange={handleSearch}
+            />
+        </SearchBarContainer>
+
+        <Filtering />
         <DiaryListContainer>
-          <Filtering />
-          {searchedList
-            ? searchedList.map((diary) => (
-                <DiaryBlock key={diary.recruitId}>
-                  <DiaryHeader
-                    onClick={() => {
-                      getPostDetail(token, diary.recruitId, navigate);
-                    }}
-                  >
-                    <ThumbnailBox>
-                      {diary.thumbnailImgURL ? (
-                        <ThumbnailImg
-                          src={`${STATIC_URL + diary.thumbnailImgURL}`}
-                          alt="Thumbnail"
-                        />
-                      ) : (
-                        <EmptyThumbnailImg alt="EmptyThumbnail" />
-                      )}
-                    </ThumbnailBox>
-                    <Title>{diary.title}</Title>
-                  </DiaryHeader>
-                  <DiaryBody
-                    onClick={() => {
-                      getPostDetail(token, diary.recruitId, navigate);
-                    }}
-                  >
-                    <AuthorBlock>
-                      <AuthorProfileImg src={`${diary.member.profileImgURL}`} />
-                      <Author>{diary.member.nickname}</Author>
-                    </AuthorBlock>
-                    <DiaryInfoBlock>
-                      <ViewCount>조회수 {diary.viewCount}</ViewCount>
-                      <CommentCount>댓글 {diary.commentCount}</CommentCount>
-                    </DiaryInfoBlock>
-                  </DiaryBody>
-                  <BookmarkIcon
-                    onClick={() => bookmarkPost(diary.diaryId)}
-                    className={diary.isBookmarked ? "Bookmarked Icon" : "Icon"}
-                  />
-                </DiaryBlock>
-              ))
-            : "Loading"}
-        </DiaryListContainer>
+          {searchedList ? (searchedList.map((post) => (
+          <PostBlock key={post.boardId}>
+          <PostHeader
+            onClick={() => {
+              getPostDetail(post.boardId, token, navigate);
+            }}
+          >
+            <ThumbnailBox>
+              {post.member.profileImg ? (
+                <ThumbnailImg
+                  src={post.member.profileImg}
+                  alt="Thumbnail"
+                />
+              ) : (
+                <EmptyThumbnailImg alt="EmptyThumbnail" />
+              )}
+            </ThumbnailBox>
+            <Title>{post.title}</Title>
+            <Author>{post.member.nickname}</Author>
+          </PostHeader>
+          <ViewCount>조회수 : {post.viewCount}</ViewCount>
+        </PostBlock>
+            ))): "Loading"}
+          </DiaryListContainer>
       </BodyContainer>
       <Footer />
       {isModalOpen && (
@@ -138,15 +132,25 @@ const BodyContainer = styled.div`
   background: #ffffff;
 `;
 
+const SearchBarContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 220px;
+`;
+
 const DiaryListContainer = styled.div`
-  width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-left: 220px;
+  margin-top: 30px;
+  padding-bottom: 400px;
 `;
 
-const DiaryBlock = styled.div`
+const PostBlock = styled.div`
+  padding: 20px;
   width: 800px;
   border-radius: 10px;
   background: #f3e5f5;
@@ -157,25 +161,30 @@ const DiaryBlock = styled.div`
     top: -5px;
     right: 10px;
     z-index: 0;
-    fill: #9b9b9b;
-  }
-  .Bookmarked {
-    fill: #7054ff;
+    fill: #9c27b0;
   }
 `;
 
-const DiaryHeader = styled.div`
+const PostHeader = styled.div`
   display: flex;
   align-items: center;
+  color: #7b1fa2;
 `;
 
-const DiaryBody = styled.div`
-  display: flex;
-  justify-content: right;
+const Author = styled.div`
+  color: #ba68c8;
+  position: absolute;
+  right: 0;
+  margin-right: 20px;
+`;
+
+const ViewCount = styled.div`
+  color: #ba68c8;
 `;
 
 const Title = styled.div`
-  color: #8e24aa;
+  font-size: x-large;
+  font-weight: bold;
 `;
 
 const ThumbnailBox = styled.div`
@@ -210,16 +219,10 @@ const AuthorProfileImg = styled.img`
   border-radius: 100px;
 `;
 
-const Author = styled.div`
-  color: #8e24aa;
-`;
+
 const DiaryInfoBlock = styled.div`
   display: flex;
   justify-content: right;
-  color: #8e24aa;
-`;
-
-const ViewCount = styled.div`
   color: #8e24aa;
 `;
 
