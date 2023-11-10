@@ -155,7 +155,27 @@ export const getPostList = (token, setPostList) => {
   });
 };
 
-export const getPostDetail = () => {};
+export const getPostDetail = (token, postId, navigate) => {
+  console.log(postId);
+  let config = {
+    method: "get",
+    url: `https://void-team.kro.kr/api/recruit/${postId}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  axios
+  .request(config)
+  .then((response) => {
+    console.log(response.data);
+    const post = response.data;
+    navigate(`/recruit/${post.recruitId}`, { state : post})
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+};
 
 export const bookmarkPost = () => {};
 
@@ -180,3 +200,15 @@ export const uploadPost = (token, postData, setIsModalOpen) => {
     console.log(error);
   });
 };
+
+export const deletePost = () => {
+
+};
+
+export const getCommentList = () => {};
+
+export const postComment = () => {};
+
+export const editComment = () => {};
+
+export const deleteComment = () => {};

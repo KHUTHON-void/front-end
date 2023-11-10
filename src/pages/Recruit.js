@@ -52,14 +52,14 @@ useEffect(() => {
         <DiaryListContainer>
         <Filtering />
           {searchedList ? (searchedList.map((diary) => (
-            <DiaryBlock key={diary.id}>
-              <DiaryHeader onClick={() => {getPostDetail(diary.diaryId, navigate)}}>
+            <DiaryBlock key={diary.recruitId}>
+              <DiaryHeader onClick={() => {getPostDetail(token, diary.recruitId, navigate)}}>
                 <ThumbnailBox>
                   {diary.thumbnailImgURL ? <ThumbnailImg src={`${STATIC_URL + diary.thumbnailImgURL}`} alt="Thumbnail"/> : <EmptyThumbnailImg alt="EmptyThumbnail" />}
                 </ThumbnailBox>
                 <Title>{diary.title}</Title>
               </DiaryHeader>
-              <DiaryBody onClick={() => {getPostDetail(diary.diaryId, navigate)}}>
+              <DiaryBody onClick={() => {getPostDetail(token, diary.recruitId, navigate)}}>
                 <AuthorBlock>
                   <AuthorProfileImg src={`${diary.member.profileImgURL}`} />
                   <Author>{diary.member.nickname}</Author>
@@ -151,7 +151,9 @@ const DiaryBody = styled.div`
   justify-content: right;
 `;
 
-const Title = styled.div``;
+const Title = styled.div`
+  color: #8e24aa;
+`;
 
 const ThumbnailBox = styled.div`
   width: 64px;
@@ -176,6 +178,7 @@ const AuthorBlock = styled.div`
   display: flex;
   align-items: center;
   margin-right: 10px;
+  
 `;
 
 const AuthorProfileImg = styled.img`
@@ -185,14 +188,17 @@ const AuthorProfileImg = styled.img`
   border-radius: 100px;
 `;
 
-const Author = styled.div``;
+const Author = styled.div`
+  color: #8e24aa;
+`;
 const DiaryInfoBlock = styled.div`
   display: flex;
   justify-content: right;
+  color: #8e24aa;
 `;
 
 const ViewCount = styled.div`
-
+  color: #8e24aa;
 `;
 
 const LikeCount = styled.div`
@@ -201,4 +207,5 @@ const LikeCount = styled.div`
 
 const CommentCount = styled.div`
   padding: 0 10px;
+  color: #8e24aa;
 `;

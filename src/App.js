@@ -7,6 +7,8 @@ import VideoChat from "./pages/VideoChat";
 import Profile from "./pages/Profile";
 import Recruit from "./pages/Recruit";
 import Ask from "./pages/Ask";
+import VideoChat2 from './pages/VideoChat2';
+import RecruitDetail from './pages/RecruitDetail';
 
 const App = () => {
   return (
@@ -36,6 +38,10 @@ const App = () => {
         <Route
           path="/recruit"
           element={<Recruit />}
+        />
+        <Route 
+          path={"/recruit/:postId"} 
+          element={<RecruitDetail />}
         />
         <Route
           path="/ask"
