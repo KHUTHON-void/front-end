@@ -75,10 +75,10 @@ const Recruit = () => {
         <DiaryListContainer>
           {searchedList
             ? searchedList.map((post) => (
-                <PostBlock key={post.boardId}>
+                <PostBlock key={post.recruitId}>
                   <PostHeader
                     onClick={() => {
-                      getPostDetail(post.boardId, token, navigate);
+                      getPostDetail(post.recruitId, token, navigate);
                     }}
                   >
                     <ThumbnailBox>

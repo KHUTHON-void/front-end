@@ -167,7 +167,7 @@ export const getPostList = (token, setPostList) => {
     });
 };
 
-export const getPostDetail = (token, postId, navigate) => {
+export const getPostDetail = (postId, token, navigate) => {
   console.log(postId);
   let config = {
     method: "get",
@@ -182,7 +182,7 @@ export const getPostDetail = (token, postId, navigate) => {
     .then((response) => {
       console.log(response.data);
       const post = response.data;
-      navigate(`/recruit/${post.recruitId}`, { state: post });
+      navigate(`/recruit/${postId}`, { state: post });
     })
     .catch((error) => {
       console.log(error);
