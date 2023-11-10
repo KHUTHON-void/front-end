@@ -9,6 +9,7 @@ import WriteAskModal from "../components/WriteAskModal";
 import { useCookies } from "react-cookie";
 import { getAskPostList, getAskPostDetail } from "../utils/axios";
 import { useNavigate } from "react-router-dom";
+import SearchBar from "../components/SearchBar";
 
 const Ask = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -57,6 +58,14 @@ const Ask = () => {
     <>
       <Header />
       <Sidebar />
+      <SearchBarContainer>
+        <SearchBar
+          width="600px"
+          height="44px"
+          fontSize="21px"
+          placeholder="검색할 내용을 입력하세요"
+        />
+      </SearchBarContainer>
       <Filtering
         activeFilter={activeFilter}
         setActiveFilter={setActiveFilter}
@@ -132,7 +141,7 @@ const FilteredBody = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding-bottom: 400px;
 `;
 
 const PostBlock = styled.div`
@@ -191,4 +200,11 @@ const EmptyThumbnailImg = styled.div`
   width: 64px;
   height: 64px;
   background: #e3f2fd;
+`;
+
+const SearchBarContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 220px;
 `;

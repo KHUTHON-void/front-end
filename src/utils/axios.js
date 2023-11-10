@@ -140,6 +140,7 @@ export const uploadAskPost = (data, img, setIsModalOpen, token) => {
     .then((response) => {
       console.log(response.data);
       setIsModalOpen(false);
+      window.location.reload();
     })
     .catch((error) => {
       console.log(error);
