@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+
 import khu_logo from "../assets/khu_logo.png";
 
 export const LandHeader = () => {
