@@ -3,6 +3,7 @@ import GlobalStyle from "./styles/globalStyle";
 import Landing from "./pages/Landing";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+import VideoChat from './pages/VideoChat';
 
 const App = () => {
   return (
@@ -20,6 +21,10 @@ const App = () => {
         <Route
           path="/signup"
           element={<SignUp />}
+        />
+        <Route
+          path="/videochat"
+          element={<VideoChat />}
         />
       </Routes>
     </>
