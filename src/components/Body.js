@@ -9,11 +9,7 @@ const BodyContainer = styled.div`
 `;
 
 const Body = () => {
-  return (
-    <BodyContainer>
-      <p>SERVICE NAME</p>
-    </BodyContainer>
-  );
+  return <BodyContainer />;
 };
 
 export default Body;
