@@ -8,14 +8,15 @@ import { ReactComponent as BookmarkIcon } from "../assets/flag.svg";
 import { ReactComponent as WriteIcon } from "../assets/pen.svg";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import WriteRecruitModal from '../components/WriteRecruitModal'
-import { DiaryList } from '../store/fakeData'
-import Filtering from '../components/Filtering'
-import SearchBar from '../components/SearchBar'
+import WriteRecruitModal from "../components/WriteRecruitModal";
+import { DiaryList } from "../store/fakeData";
+import Filtering from "../components/Filtering";
+import SearchBar from "../components/SearchBar";
 
 const Recruit = () => {
   const navigate = useNavigate();
   const [cookies, setCookie] = useCookies();
+  const [activeFilter, setActiveFilter] = useState(null);
   const token = cookies["jwt-token"];
   const grade = cookies["grade"];
   const nickname = cookies["nickname"];
@@ -58,41 +59,46 @@ const Recruit = () => {
         <Sidebar></Sidebar>
         <SearchBarContainer>
           <SearchBar
-              width="600px"
-              height="44px"
-              fontSize="21px"
-              placeholder="검색할 내용을 입력하세요"
-              value={searchContent}
-              onChange={handleSearch}
-            />
+            width="600px"
+            height="44px"
+            fontSize="21px"
+            placeholder="검색할 내용을 입력하세요"
+            value={searchContent}
+            onChange={handleSearch}
+          />
         </SearchBarContainer>
 
-        <Filtering />
+        <Filtering
+          activeFilter={activeFilter}
+          setActiveFilter={setActiveFilter}
+        />
         <DiaryListContainer>
-          {searchedList ? (searchedList.map((post) => (
-          <PostBlock key={post.boardId}>
-          <PostHeader
-            onClick={() => {
-              getPostDetail(post.boardId, token, navigate);
-            }}
-          >
-            <ThumbnailBox>
-              {post.member.profileImg ? (
-                <ThumbnailImg
-                  src={post.member.profileImg}
-                  alt="Thumbnail"
-                />
-              ) : (
-                <EmptyThumbnailImg alt="EmptyThumbnail" />
-              )}
-            </ThumbnailBox>
-            <Title>{post.title}</Title>
-            <Author>{post.member.nickname}</Author>
-          </PostHeader>
-          <ViewCount>조회수 : {post.viewCount}</ViewCount>
-        </PostBlock>
-            ))): "Loading"}
-          </DiaryListContainer>
+          {searchedList
+            ? searchedList.map((post) => (
+                <PostBlock key={post.boardId}>
+                  <PostHeader
+                    onClick={() => {
+                      getPostDetail(post.boardId, token, navigate);
+                    }}
+                  >
+                    <ThumbnailBox>
+                      {post.member.profileImg ? (
+                        <ThumbnailImg
+                          src={post.member.profileImg}
+                          alt="Thumbnail"
+                        />
+                      ) : (
+                        <EmptyThumbnailImg alt="EmptyThumbnail" />
+                      )}
+                    </ThumbnailBox>
+                    <Title>{post.title}</Title>
+                    <Author>{post.member.nickname}</Author>
+                  </PostHeader>
+                  <ViewCount>조회수 : {post.viewCount}</ViewCount>
+                </PostBlock>
+              ))
+            : "Loading"}
+        </DiaryListContainer>
       </BodyContainer>
       <Footer />
       {isModalOpen && (
@@ -219,7 +225,6 @@ const AuthorProfileImg = styled.img`
   margin-right: 5px;
   border-radius: 100px;
 `;
-
 
 const DiaryInfoBlock = styled.div`
   display: flex;
