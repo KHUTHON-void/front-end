@@ -17,7 +17,8 @@ export const requestSignUp = (initialInfo, profileImg, navigate) => {
     },
     data: formData,
   };
-
+  console.log(initialInfo);
+  /*
   axios
     .request(config)
     .then((response) => {
@@ -27,6 +28,7 @@ export const requestSignUp = (initialInfo, profileImg, navigate) => {
     .catch((error) => {
       console.log(error);
     });
+    */
 };
 
 export const requestSignIn = (signInInfo, navigate) => {
@@ -37,10 +39,7 @@ export const requestSignIn = (signInInfo, navigate) => {
 
   let config = {
     method: "post",
-    url: API_URL + "/sign-in",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    url: API_URL + "/login",
     data: formData,
   };
 

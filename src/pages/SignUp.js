@@ -121,7 +121,7 @@ const SignUp = () => {
 
         <DivLine>
           <label>
-            <label style={{ color: "#a1887f" }}>Job : </label>
+            <label style={{ color: "#9c27b0" }}>Job : </label>
             <Select
               name="job"
               value={initialInfo.job}
@@ -135,8 +135,8 @@ const SignUp = () => {
           </label>
 
           {initialInfo.job === "UNIVERSITY_STUDENT" && (
-            <label style={{ color: "#a1887f" }}>
-              대학교 :
+            <label style={{ color: "#9c27b0" }}>
+              univ :
               <Select
                 name="university"
                 value={initialInfo.university}
@@ -176,11 +176,12 @@ const SignUp = () => {
 export default SignUp;
 
 const Container = styled.div`
+  width: 100vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: #d7ccc8;
+  background: #9c27b0;
 `;
 
 const FormContainer = styled.div`
@@ -207,17 +208,17 @@ const DivLine = styled.div`
 
 const InputForm = styled.input`
   margin-bottom: 20px;
-  background-color: #d7ccc8;
+  background-color: #e1bee7;
   font-size: 18px;
   border: none;
   border-radius: 7px;
   padding: 14px 15px;
-  width: 45%;
+  width: 60%;
   height: 50px;
   opacity: 0.7;
 
   &::placeholder {
-    color: #f50057;
+    color: #9c27b0;
   }
 `;
 
@@ -304,19 +305,19 @@ const SignUpBtn = styled.button`
   border: none;
   border-radius: 6px;
   font-size: 18px;
-  background: #a1887f;
+  background: #ce93d8;
   color: rgb(255, 255, 255);
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
   cursor: pointer;
 
   &:hover {
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
-    background: #6d4c41;
+    background: #8e24aa;
   }
 `;
 
 const ProfileText = styled.p`
-  color: #a1887f;
+  color: #9c27b0;
   font-weight: bold;
   font-size: 20px;
 `;
@@ -327,14 +328,15 @@ const Select = styled.select`
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  background-color: #d7ccc8;
-  color: #f50057;
+  background-color: #e1bee7;
+  color: #9c27b0;
   cursor: pointer;
   outline: none;
   transition: border-color 0.3s ease;
   margin-right: 10px;
   margin-left: 10px;
   opacity: 0.7;
+  width: 150px;
 
   &:hover,
   &:focus {

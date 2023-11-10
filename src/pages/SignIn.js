@@ -58,7 +58,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: #d7ccc8;
+  background: #9c27b0;
 `;
 
 const FormContainer = styled.div`
@@ -80,7 +80,7 @@ const FormContainer = styled.div`
 
 const InputForm = styled.input`
   margin-bottom: 20px;
-  background-color: #d7ccc8;
+  background-color: #e1bee7;
   font-size: 18px;
   border: none;
   border-radius: 7px;
@@ -90,7 +90,7 @@ const InputForm = styled.input`
   opacity: 0.7;
 
   &::placeholder {
-    color: #f50057;
+    color: #9c27b0;
   }
 `;
 
@@ -101,13 +101,13 @@ const SignInBtn = styled.button`
   border: none;
   border-radius: 6px;
   font-size: 18px;
-  background: #a1887f;
+  background: #ce93d8;
   color: rgb(255, 255, 255);
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
   cursor: pointer;
 
   &:hover {
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
-    background: #6d4c41;
+    background: #8e24aa;
   }
 `;
