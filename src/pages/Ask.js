@@ -7,12 +7,15 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import WriteAskModal from "../components/WriteAskModal";
 import { useCookies } from "react-cookie";
-import { getAskPostList } from "../utils/axios";
+import { getAskPostList, getAskPostDetail } from "../utils/axios";
+import { useNavigate } from "react-router-dom";
 
 const Ask = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeFilter, setActiveFilter] = useState(null);
   const [filteredData, setFilteredData] = useState([]);
+  const [postList, setPostList] = useState([]);
+  const navigate = useNavigate();
 
   const handleModalOpen = () => {
     document.body.style.overflow = "hidden";
@@ -26,38 +29,11 @@ const Ask = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        let responseData;
-        responseData = await getAskPostList(activeFilter, token);
+      let responseData;
+      responseData = await getAskPostList(activeFilter, token);
 
-        // activeFilter 값에 따라 다른 API 호출
-        /*
-        if (activeFilter === "KOREAN") {
-          responseData = await getKoreanData(token);
-        } else if (activeFilter === "ENGLISH") {
-          responseData = await getEnglishData(token);
-        } else if (activeFilter === "MATH") {
-          responseData = await getMathData(token);
-        } else if (activeFilter === "IT") {
-          responseData = await getITData(token);
-        } else if (activeFilter === "LANGUAGE") {
-          responseData = await getLanguageData(token);
-        } else if (activeFilter === "ENGINEERING") {
-          responseData = await getEngineeringData(token);
-        } else if (activeFilter === "EXAM") {
-          responseData = await getExamData(token);
-        } else if (activeFilter === "JOBSEARCHING") {
-          responseData = await getJobsearchingingData(token);
-        } else if (activeFilter === "ETC") {
-          responseData = await getEtcData(token);
-        }
-        */
-
-        setFilteredData(responseData);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        // 에러 처리 로직 추가
-      }
+      setFilteredData(responseData);
+      console.log(responseData);
     };
 
     // activeFilter 값이 변경될 때마다 fetchData 함수 호출
@@ -65,6 +41,17 @@ const Ask = () => {
       fetchData();
     }
   }, [activeFilter]);
+
+  const effectFunc = async () => {
+    let responseData;
+    responseData = await getAskPostList(activeFilter, token);
+
+    setFilteredData(responseData);
+    console.log(responseData);
+  };
+  useEffect(() => {
+    effectFunc();
+  }, []);
 
   return (
     <>
@@ -74,7 +61,31 @@ const Ask = () => {
         activeFilter={activeFilter}
         setActiveFilter={setActiveFilter}
       />
-      <FilteredBody>ddd</FilteredBody>
+      <FilteredBody>
+        {filteredData.map((post) => (
+          <PostBlock key={post.boardId}>
+            <PostHeader
+              onClick={() => {
+                getAskPostDetail(post.boardId, token, navigate);
+              }}
+            >
+              <ThumbnailBox>
+                {post.member.profileImg ? (
+                  <ThumbnailImg
+                    src={post.member.profileImg}
+                    alt="Thumbnail"
+                  />
+                ) : (
+                  <EmptyThumbnailImg alt="EmptyThumbnail" />
+                )}
+              </ThumbnailBox>
+              <Title>{post.title}</Title>
+              <Author>{post.member.nickname}</Author>
+            </PostHeader>
+            <ViewCount>조회수 : {post.viewCount}</ViewCount>
+          </PostBlock>
+        ))}
+      </FilteredBody>
       <WritePostButton onClick={handleModalOpen}>
         <WriteIcon
           fill="white"
@@ -116,4 +127,68 @@ const WritePostButton = styled.div`
 
 const FilteredBody = styled.div`
   margin-left: 220px;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+`;
+
+const PostBlock = styled.div`
+  padding: 20px;
+  width: 800px;
+
+  border-radius: 10px;
+  background: #f3e5f5;
+  position: relative;
+  margin-bottom: 20px;
+  .Icon {
+    position: absolute;
+    top: -5px;
+    right: 10px;
+    z-index: 0;
+    fill: #9c27b0;
+  }
+`;
+
+const PostHeader = styled.div`
+  display: flex;
+  align-items: center;
+  color: #7b1fa2;
+`;
+
+const Author = styled.div`
+  color: #ba68c8;
+  position: absolute;
+  right: 0;
+  margin-right: 20px;
+`;
+
+const ViewCount = styled.div`
+  color: #ba68c8;
+`;
+
+const Title = styled.div`
+  font-size: x-large;
+  font-weight: bold;
+`;
+
+const ThumbnailBox = styled.div`
+  width: 64px;
+  height: 64px;
+  background: #f1f1f1;
+  margin: 10px;
+`;
+
+const ThumbnailImg = styled.img`
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+`;
+
+const EmptyThumbnailImg = styled.div`
+  width: 64px;
+  height: 64px;
+  background: #f1f1f1;
 `;

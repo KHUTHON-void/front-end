@@ -85,24 +85,37 @@ export const getProfileInfo = (token, setProfileInfo, setCookie) => {
     });
 };
 
-export const getAskPostList = (category, token) => {
-  console.log(category, token);
-  let config = {
-    method: "get",
-    url: `https://void-team.kro.kr/api/board/rooms?category=${category}&sort=LIKE`,
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-
-  axios
-    .request(config)
-    .then((response) => {
+export const getAskPostList = async (category, token) => {
+  try {
+    console.log(category, token);
+    if (category === null) {
+      let config = {
+        method: "get",
+        url: `https://void-team.kro.kr/api/board/rooms?sort=LIKE`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.request(config);
       console.log(response.data);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+      return response.data;
+    } else {
+      let config = {
+        method: "get",
+        url: `https://void-team.kro.kr/api/board/rooms?category=${category}&sort=LIKE`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.request(config);
+      console.log(response.data);
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+    // Handle error or throw it again if you want to handle it outside
+    throw error;
+  }
 };
 
 export const uploadAskPost = (data, img, setIsModalOpen, token) => {
@@ -112,8 +125,6 @@ export const uploadAskPost = (data, img, setIsModalOpen, token) => {
   formData.append("mediaList", img);
   formData.append("data", blobData);
 
-  console.log(data);
-  console.log(img);
   let config = {
     method: "post",
     url: "https://void-team.kro.kr/api/board",
@@ -145,14 +156,14 @@ export const getPostList = (token, setPostList) => {
   };
 
   axios
-  .request(config)
-  .then((response) => {
-    console.log(response.data);
-    setPostList(response.data);
-  })
-  .catch((error) => {
-    console.log(error);
-  });
+    .request(config)
+    .then((response) => {
+      console.log(response.data);
+      setPostList(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
 export const getPostDetail = (token, postId, navigate) => {
@@ -191,14 +202,36 @@ export const uploadPost = (token, postData, setIsModalOpen) => {
   };
 
   axios
-  .request(config)
-  .then((response) => {
-    console.log(response.data);
-    setIsModalOpen(false);
-  })
-  .catch((error) => {
-    console.log(error);
-  });
+    .request(config)
+    .then((response) => {
+      console.log(response.data);
+      setIsModalOpen(false);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+export const getAskPostDetail = (id, token, navigate) => {
+  let config = {
+    method: "get",
+    url: `https://void-team.kro.kr/api/board/${id}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  axios
+    .request(config)
+    .then((response) => {
+      console.log(response.data);
+      navigate(`/ask/${id}`, {
+        state: response.data,
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
 export const deletePost = () => {
