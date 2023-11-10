@@ -135,10 +135,48 @@ export const uploadAskPost = (data, img, setIsModalOpen, token) => {
     });
 };
 
-export const getPostList = () => {};
+export const getPostList = (token, setPostList) => {
+  let config = {
+    method: "get",
+    url: "https://void-team.kro.kr/api/recruit/list",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  axios
+  .request(config)
+  .then((response) => {
+    console.log(response.data);
+    setPostList(response.data);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+};
 
 export const getPostDetail = () => {};
 
 export const bookmarkPost = () => {};
 
-export const uploadPost = () => {};
+export const uploadPost = (token, postData, setIsModalOpen) => {
+  console.log(postData);
+  let config = {
+    method: "post",
+    url: "https://void-team.kro.kr/api/recruit",
+    data: postData,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  axios
+  .request(config)
+  .then((response) => {
+    console.log(response.data);
+    setIsModalOpen(false);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+};

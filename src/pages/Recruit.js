@@ -7,14 +7,20 @@ import { bookmarkPost, getPostDetail, getPostList } from '../utils/axios'
 import { ReactComponent as BookmarkIcon } from "../assets/flag.svg";
 import { ReactComponent as WriteIcon } from "../assets/pen.svg"
 import { useNavigate } from 'react-router-dom'
+import { useCookies } from "react-cookie";
 import WriteRecruitModal from '../components/WriteRecruitModal'
 import { DiaryList } from '../store/fakeData'
-
+import Filtering from '../components/Filtering'
 
 const Recruit = () => {
   const navigate = useNavigate();
+  const [cookies, setCookie] = useCookies();
+  const token = cookies["jwt-token"];
+  const grade = cookies["grade"];
+  const nickname = cookies["nickname"];
+  const profileImg = cookies["profileImg"];
   const STATIC_URL = "https://void-team.kro.kr/api"
-  const [postList, setPostList] = useState(DiaryList)
+  const [postList, setPostList] = useState([])
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchContent, setsearchContent] = useState('')
   const searchedList = searchContent === "" ? postList : postList.filter((post) =>
@@ -32,8 +38,8 @@ const handleSearch = (e) => {
 }
 
 useEffect(() => {
-  getPostList();
-});
+  getPostList(token, setPostList);
+}, []);
 
   return (
     <>
@@ -44,6 +50,7 @@ useEffect(() => {
       <BodyContainer>
         <Sidebar></Sidebar>
         <DiaryListContainer>
+        <Filtering />
           {searchedList ? (searchedList.map((diary) => (
             <DiaryBlock key={diary.id}>
               <DiaryHeader onClick={() => {getPostDetail(diary.diaryId, navigate)}}>
@@ -54,12 +61,11 @@ useEffect(() => {
               </DiaryHeader>
               <DiaryBody onClick={() => {getPostDetail(diary.diaryId, navigate)}}>
                 <AuthorBlock>
-                  <AuthorProfileImg src={`${STATIC_URL + diary.member.profileImgURL}`} />
-                  <Author>{diary.member.name}</Author>
+                  <AuthorProfileImg src={`${diary.member.profileImgURL}`} />
+                  <Author>{diary.member.nickname}</Author>
                 </AuthorBlock>
                 <DiaryInfoBlock>
                   <ViewCount>조회수 {diary.viewCount}</ViewCount>
-                  <LikeCount>👍 {diary.likeCount}</LikeCount>
                   <CommentCount>댓글 {diary.commentCount}</CommentCount>
                 </DiaryInfoBlock>
               </DiaryBody>
@@ -75,7 +81,9 @@ useEffect(() => {
       {isModalOpen && (
             <WriteRecruitModal
               setIsModalOpen={setIsModalOpen}
-              name="김수한무거북이"
+              name={nickname}
+              profileImg={profileImg}
+              token={token}
             />
           )}
     </>
@@ -109,15 +117,16 @@ const BodyContainer = styled.div`
 
 const DiaryListContainer = styled.div`
   width: 100vw;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 const DiaryBlock = styled.div`
   width: 800px;
-  margin: auto;
-  border-radius: 5px;
-  border: 1px solid #8b8b8b;
-  background: #ffffff;
+  border-radius: 10px;
+  background: #f3e5f5;
   position: relative;
   margin-bottom: 20px;
   .Icon {

@@ -99,7 +99,7 @@ const VideoChat = () => {
   }
 
   useEffect(() => {
-    socketRef.current = io("ws::void-team.kro.kr/api/socket");
+    socketRef.current = io("wss://void-team.kro.kr:8090/api/socket");
   
     pcRef.current = new RTCPeerConnection({
       iceServers: [
@@ -214,8 +214,8 @@ const VideoConsole = styled.div`
   justify-content: center;
   width: 100vw;
   .On {
-    background: #8b8b8b;
-    color: #313338;
+    background: black;
+    color: #ffffff;
   }
 `;
 
