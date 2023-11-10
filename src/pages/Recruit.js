@@ -8,12 +8,13 @@ import { ReactComponent as BookmarkIcon } from "../assets/flag.svg";
 import { ReactComponent as WriteIcon } from "../assets/pen.svg"
 import { useNavigate } from 'react-router-dom'
 import WriteRecruitModal from '../components/WriteRecruitModal'
+import { DiaryList } from '../store/fakeData'
 
 
 const Recruit = () => {
   const navigate = useNavigate();
   const STATIC_URL = "https://void-team.kro.kr/api"
-  const [postList, setPostList] = useState([])
+  const [postList, setPostList] = useState(DiaryList)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchContent, setsearchContent] = useState('')
   const searchedList = searchContent === "" ? postList : postList.filter((post) =>
@@ -86,7 +87,7 @@ export default Recruit
 const WritePostButton = styled.div`
   right: 10vw;
   bottom: 10vh;
-  position : absolute;
+  position : fixed;
   display: flex;
   align-items: center;
   justify-content: center;

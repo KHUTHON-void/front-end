@@ -99,7 +99,7 @@ const VideoChat = () => {
   }
 
   useEffect(() => {
-    socketRef.current = io("ws::void-team.kro.kr/socket");
+    socketRef.current = io("ws::void-team.kro.kr/api/socket");
   
     pcRef.current = new RTCPeerConnection({
       iceServers: [
@@ -149,14 +149,14 @@ const VideoChat = () => {
         <VideoContainer>
           <MyVideo 
           id="myVideo" 
-          playsInLine 
+          playsInline 
           autoPlay
           width="640px"
           height="480px"
           ref={myVideoRef}/>
           <OpponentVideo 
           id="opponentVideo" 
-          playsInLine 
+          playsInline 
           autoPlay
           width="640px"
           height="480px"
