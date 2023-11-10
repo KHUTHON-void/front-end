@@ -195,7 +195,7 @@ const FormContainer = styled.div`
   box-shadow: 0 4px 30px rgba(35, 35, 35, 0.1);
 
   &:hover {
-    box-shadow: 0 1px 17px 0 rgba(0, 0, 0, 0.4), 0 6px 10px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 17px 0 rgba(141, 110, 99, 0.4), 0 6px 10px 0 rgba(0, 0, 0, 0.1);
   }
 `;
 

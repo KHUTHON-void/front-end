@@ -28,3 +28,29 @@ export const requestSignUp = (initialInfo, profileImg, navigate) => {
       console.log(error);
     });
 };
+
+export const requestSignIn = (signInInfo, navigate) => {
+  const formData = new FormData();
+  const userData = { signInInfo };
+
+  formData.append("signInRequest", JSON.stringify(userData));
+
+  let config = {
+    method: "post",
+    url: API_URL + "/sign-in",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: formData,
+  };
+
+  axios
+    .request(config)
+    .then((response) => {
+      navigate("/profile");
+      console.log(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
