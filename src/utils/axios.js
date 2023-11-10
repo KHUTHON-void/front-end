@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import default_profile from "../assets/khu_logo.png";
 const API_URL = process.env.VOID_API;
 
 export const requestSignUp = (initialInfo, profileImg, navigate, setCookie) => {
@@ -35,15 +35,10 @@ export const requestSignUp = (initialInfo, profileImg, navigate, setCookie) => {
 };
 
 export const requestSignIn = (signInInfo, navigate) => {
-  const formData = new FormData();
-  const userData = { signInInfo };
-
-  formData.append("signInRequest", JSON.stringify(userData));
-
   let config = {
     method: "post",
-    url: API_URL + "/login",
-    data: formData,
+    url: "https://void-team.kro.kr/api/login",
+    data: signInInfo,
   };
 
   axios
@@ -51,6 +46,34 @@ export const requestSignIn = (signInInfo, navigate) => {
     .then((response) => {
       navigate("/profile");
       console.log(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+export const getProfileInfo = (token, setProfileInfo) => {
+  let config = {
+    method: "get",
+    url: "https://void-team.kro.kr/api/validate-jwt",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  axios
+    .request(config)
+    .then((response) => {
+      console.log(response.data);
+      let profileImg = response.data.profileImgURL;
+      if (profileImg === null) {
+        profileImg = default_profile;
+      }
+      setProfileInfo({
+        profileImg: profileImg,
+        grade: response.data.grade,
+        nickname: response.data.nickname,
+      });
     })
     .catch((error) => {
       console.log(error);
