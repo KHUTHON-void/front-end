@@ -5,6 +5,8 @@ import Footer from "../components/Footer";
 import DateConverter from "../utils/DateConverter";
 import { useCookies } from "react-cookie";
 import { useLocation, useNavigate } from "react-router-dom";
+import question from "../assets/question.png";
+import answer from "../assets/answer.png";
 import {
   deleteComment,
   deletePost,
@@ -15,10 +17,11 @@ import {
 import { ReactComponent as SendIcon } from "../assets/paper_plane.svg";
 import { ReactComponent as CloseIcon } from "../assets/close_gray.svg";
 import khu_logo from "../assets/khu_logo.png";
-import goldLogo from "../assets/gold.png";
+import goldLogo from "../assets/silver.png";
+import bronzelogo from "../assets/bronze.png";
 import WriteRecruitModal from "../components/WriteRecruitModal";
 
-const PostDetail = () => {
+const RecruitDetail = () => {
   const location = useLocation();
   const cookies = useCookies();
   const navigate = useNavigate();
@@ -31,13 +34,25 @@ const PostDetail = () => {
   const [commentList, setCommentList] = useState([
     {
       commentId: 1,
-      content: "제가 도와드릴게요~",
+      content: "굉장히 쉬운 문제입니다.",
+      isMyPost: false,
+      member: {
+        memberId: 1,
+        nickname: "장승환",
+        university: "KHU",
+        grade: "GOLD",
+      },
+      createdDate: "2023-11-10T18:36:59.05106",
+    },
+    {
+      commentId: 2,
+      content: "역수를 곱하시면 됩니다~",
       isMyPost: false,
       member: {
         memberId: 1,
         nickname: "윤성배",
         university: "KHU",
-        grade: "GOLD",
+        grade: "BRONZE",
       },
       createdDate: "2023-11-10T18:36:59.05106",
     },
@@ -110,6 +125,7 @@ const PostDetail = () => {
           </AuthorLine>
         </DiaryHeader>
         <DiaryBody>
+          <img src={question} />
           <DiaryContent>{post.content}</DiaryContent>
         </DiaryBody>
         <DiaryCommentContainer>
@@ -157,7 +173,7 @@ const PostDetail = () => {
                         <CommentHeader>
                           <KhuLogo src={khu_logo} />
                           <ProfileImg />
-                          <Name>윤성배</Name>
+                          <Name>{comment.member.nickname}</Name>
                           <InfoBox>
                             <GoldTier src={goldLogo} />
                           </InfoBox>
@@ -165,6 +181,7 @@ const PostDetail = () => {
                         </CommentHeader>
                         <Body>
                           <Content>{comment.content}</Content>
+                          {comment.member.nickname === "장승환" && <img src={answer} />}
                         </Body>
                         <EditCommentButton onClick={() => navigate(`/videochat`)}>
                           만나보기
@@ -189,7 +206,7 @@ const PostDetail = () => {
   );
 };
 
-export default PostDetail;
+export default RecruitDetail;
 
 const PageBody = styled.div`
   display: flex;
@@ -282,7 +299,7 @@ const CommentInputOutlay = styled.div`
   height: 100px;
   border: none;
   border-radius: 100px;
-  background: #f1f1f1;
+  background: #f3e5f5;
   padding: 50px;
   font-family: Pretendard;
   .input::-webkit-scrollbar {
@@ -297,7 +314,7 @@ const CommentInput = styled.textarea`
   resize: none;
   outline: none;
   align-items: center;
-  background: #f1f1f1;
+  background: #f3e5f5;
   padding: 10px;
   font-size: 1rem;
   font-family: Pretendard;
@@ -439,7 +456,7 @@ const EditCommentButton = styled.div`
   justify-content: center;
   right: 50px;
   top: 0px;
-  background: #7054ff;
+  background: #ba68c8;
   color: #ffffff;
   border-radius: 100px;
   width: 100px;
@@ -449,11 +466,4 @@ const EditCommentButton = styled.div`
     opacity: 0.3;
     transition: 0.3s;
   }
-`;
-
-const DeleteCommentButton = styled.div`
-  position: absolute;
-  right: 10px;
-  top: 0px;
-  cursor: pointer;
 `;

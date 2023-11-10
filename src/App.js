@@ -8,6 +8,7 @@ import Profile from "./pages/Profile";
 import Recruit from "./pages/Recruit";
 import Ask from "./pages/Ask";
 import RecruitDetail from "./pages/RecruitDetail";
+import AskDetail from "./pages/AskDetail";
 
 const App = () => {
   return (
@@ -49,6 +50,10 @@ const App = () => {
         <Route
           path="/ask"
           element={<Ask />}
+        />
+        <Route
+          path="/ask/:postId"
+          element={<AskDetail />}
         />
       </Routes>
     </>
