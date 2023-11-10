@@ -7,8 +7,8 @@ import styled from "styled-components";
 const Sidebar = () => {
   return (
     <SidebarContainer>
-      <SidebarLink to="/">모집 게시판</SidebarLink>
-      <SidebarLink to="/about">질문 게시판</SidebarLink>
+      <SidebarLink to="/recruit">모집 게시판</SidebarLink>
+      <SidebarLink to="/ask">질문 게시판</SidebarLink>
     </SidebarContainer>
   );
 };

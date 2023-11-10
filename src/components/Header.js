@@ -8,10 +8,13 @@ export const LandHeader = () => {
   const navigateToSignUp = () => {
     navigate("signup");
   };
+  const navigateToSignIn = () => {
+    navigate("signin");
+  };
   return (
     <HeaderContainer>
       <SignBtn onClick={navigateToSignUp}>SIGN UP</SignBtn>
-      <SignBtn>SIGN IN</SignBtn>
+      <SignBtn onClick={navigateToSignIn}>SIGN IN</SignBtn>
     </HeaderContainer>
   );
 };
