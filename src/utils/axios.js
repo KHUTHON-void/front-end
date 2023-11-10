@@ -86,9 +86,10 @@ export const getProfileInfo = (token, setProfileInfo, setCookie) => {
 };
 
 export const getAskPostList = (category, token) => {
+  console.log(category, token);
   let config = {
     method: "get",
-    url: `https://void-team.kro.kr/api/rooms?category=${category}?sort=CHRONOLOGICAL`,
+    url: `https://void-team.kro.kr/api/board/rooms?category=${category}&sort=LIKE`,
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -98,6 +99,36 @@ export const getAskPostList = (category, token) => {
     .request(config)
     .then((response) => {
       console.log(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+export const uploadAskPost = (data, img, setIsModalOpen, token) => {
+  const formData = new FormData();
+  const blobData = new Blob([JSON.stringify(data)], { type: "application/json" });
+
+  formData.append("mediaList", img);
+  formData.append("data", blobData);
+
+  console.log(data);
+  console.log(img);
+  let config = {
+    method: "post",
+    url: "https://void-team.kro.kr/api/board",
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${token}`,
+    },
+    data: formData,
+  };
+
+  axios
+    .request(config)
+    .then((response) => {
+      console.log(response.data);
+      setIsModalOpen(false);
     })
     .catch((error) => {
       console.log(error);

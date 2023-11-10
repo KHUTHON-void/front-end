@@ -25,10 +25,10 @@ const Ask = () => {
   const profileImg = cookies["profileImg"];
 
   useEffect(() => {
-    const fetchData = async (activeFilter, token) => {
+    const fetchData = async () => {
       try {
         let responseData;
-        responseData = await getAskPostList(activeFilter);
+        responseData = await getAskPostList(activeFilter, token);
 
         // activeFilter 값에 따라 다른 API 호출
         /*
@@ -62,7 +62,7 @@ const Ask = () => {
 
     // activeFilter 값이 변경될 때마다 fetchData 함수 호출
     if (activeFilter) {
-      fetchData(activeFilter);
+      fetchData();
     }
   }, [activeFilter]);
 
