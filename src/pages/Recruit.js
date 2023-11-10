@@ -122,6 +122,7 @@ const WritePostButton = styled.div`
   border-radius: 100px;
   margin-left: 34px;
   cursor: pointer;
+  z-index: 999;
   :hover {
     opacity: 0.8;
     transition: 0.3s;

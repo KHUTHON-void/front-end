@@ -147,20 +147,26 @@ const VideoChat = () => {
     <>
       <PageBody>
         <VideoContainer>
-          <MyVideo 
-          id="myVideo" 
-          playsInline 
-          autoPlay
-          width="640px"
-          height="480px"
-          ref={myVideoRef}/>
+          <VideoBox>
+            <MyVideo 
+            id="myVideo" 
+            playsInline 
+            autoPlay
+            width="640px"
+            height="480px"
+            ref={myVideoRef}/>
+            <Name>쏭</Name>
+          </VideoBox>
+          <VideoBox>
           <OpponentVideo 
-          id="opponentVideo" 
-          playsInline 
-          autoPlay
-          width="640px"
-          height="480px"
-          ref={remoteVideoRef}/>
+            id="opponentVideo" 
+            playsInline 
+            autoPlay
+            width="640px"
+            height="480px"
+            ref={remoteVideoRef}/>
+            <Name>장승환</Name>
+          </VideoBox>
         </VideoContainer>
         <VideoConsole>
           <CameraButton onClick={toggleCamera} className={isCameraOn ? "On" : "Off"}>
@@ -185,6 +191,24 @@ const PageBody = styled.div`
   color: #ffffff;
 `;
 
+const VideoBox = styled.div`
+  position: relative;
+`;
+
+const Name = styled.div`
+  position: absolute;
+  bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  background: black;
+  color: #ffffff;
+  width: 80px;
+  font-size: 1rem;
+  border-radius: 10px;
+`;
+
 const VideoContainer = styled.div`
   display: flex;
   align-items: center;
@@ -196,7 +220,7 @@ const VideoContainer = styled.div`
 
 const MyVideo = styled.video`
   background: #8b8b8b;
-  margin: 10px;
+  margin: 10px 20px 10px 0;
   border-radius: 10px;
 `;
 
