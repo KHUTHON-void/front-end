@@ -8,7 +8,7 @@ const FooterContainer = styled.footer`
   height: 5vh;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: right;
 `;
 
 const Footer = () => {

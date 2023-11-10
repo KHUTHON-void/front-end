@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import Sidebar from "../components/Sidebar";
 import { getProfileInfo } from "../utils/axios";
+import { TierReader } from "../utils/TierReader";
 
 const Profile = () => {
   const location = useLocation();
@@ -22,14 +23,18 @@ const Profile = () => {
     getProfileInfo(token, setProfileInfo);
   }, []);
 
+  const tier = TierReader(profileInfo.grade);
+
   return (
     <>
       <Header />
       <BodyContainer>
         <Sidebar />
-        <ProfileImage src={profileInfo.profileImg}></ProfileImage>
-        <div>{profileInfo.grade}</div>
-        <div>{profileInfo.nickname}</div>
+        <ImgContainer>
+          <ProfileImage src={profileInfo.profileImg}></ProfileImage>
+          <Tier src={tier}></Tier>
+        </ImgContainer>
+        <NicknameDiv>{profileInfo.nickname}</NicknameDiv>
       </BodyContainer>
       <Footer />
     </>
@@ -44,8 +49,8 @@ const BodyContainer = styled.div`
   align-items: center;
   background: #9c27b0;
 
+  margin-left: 220px;
   padding: 20px;
-  width: 100vw;
   height: 100vh;
 `;
 
@@ -54,6 +59,32 @@ const ProfileImage = styled.img`
   height: 270px;
   border-radius: 50%;
   overflow: hidden;
+  margin-right: 40px;
 
   box-shadow: 0px 6px 12px -6px #666;
+`;
+
+const Tier = styled.img`
+  width: 270px;
+  height: 270px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #fff;
+
+  box-shadow: 0px 6px 12px -6px #666;
+`;
+
+const ImgContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  width: 100vw;
+  height: 60vh;
+`;
+
+const NicknameDiv = styled.div`
+  color: #fff;
+  font-size: 30px;
+  font-weight: bold;
 `;
