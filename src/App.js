@@ -27,6 +27,7 @@ const App = () => {
         <Route
           path="/videochat"
           element={<VideoChat />}
+        />
         <Route
           path="/profile"
           element={<Profile />}

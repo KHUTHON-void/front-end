@@ -56,3 +56,11 @@ export const requestSignIn = (signInInfo, navigate) => {
       console.log(error);
     });
 };
+
+export const getPostList = () => {};
+
+export const getPostDetail = () => {};
+
+export const bookmarkPost = () => {};
+
+export const uploadPost = () => {};
