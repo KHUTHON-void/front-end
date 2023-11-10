@@ -2,33 +2,36 @@ import axios from "axios";
 
 const API_URL = process.env.VOID_API;
 
-export const requestSignUp = (initialInfo, profileImg, navigate) => {
+export const requestSignUp = (initialInfo, profileImg, navigate, setCookie) => {
+  console.log(initialInfo);
   const formData = new FormData();
-  const userData = { initialInfo };
-
-  formData.append("signUpRequest", JSON.stringify(userData));
+  const blobData = new Blob([JSON.stringify(initialInfo)], { type: "application/json" });
+  formData.append("signUpRequest", blobData);
   formData.append("profileImg", profileImg);
 
   let config = {
     method: "post",
-    url: API_URL + "/sign-up",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    url: "https://void-team.kro.kr/api/sign-up",
     data: formData,
   };
-  console.log(initialInfo);
-  /*
+
   axios
     .request(config)
     .then((response) => {
-      navigate("/profile");
-      console.log(response.data);
+      const token = response.headers.authorization;
+      setCookie("jwt-token", token, { path: "/", secure: true });
+      navigate("/profile", {
+        state: {
+          profileImg: response.data.profileImgURL,
+          nickname: response.data.nickname,
+          grade: response.grade,
+        },
+      });
+      console.log(response.data, token);
     })
     .catch((error) => {
       console.log(error);
     });
-    */
 };
 
 export const requestSignIn = (signInInfo, navigate) => {

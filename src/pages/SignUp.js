@@ -3,9 +3,11 @@ import styled from "styled-components";
 import { useState, useRef } from "react";
 import default_profile from "../assets/default_profile.png";
 import { requestSignUp } from "../utils/axios";
+import { useCookies } from "react-cookie";
 
 const SignUp = () => {
   const location = useLocation();
+  const [cookies, setCookie] = useCookies();
 
   const [initialInfo, setInitialInfo] = useState({
     email: "",
@@ -53,14 +55,14 @@ const SignUp = () => {
 
   //회원가입 버튼 눌렀을 때 동작
   const handleSignUp = async () => {
-    requestSignUp(initialInfo, profileImg, navigate);
+    requestSignUp(initialInfo, profileImg, navigate, setCookie);
   };
 
   return (
     <Container>
       <FormContainer>
         <ProfileContainer>
-          <ProfileText>Profile Image</ProfileText>
+          <ProfileText>PROFILE IMAGE</ProfileText>
           <ProfileImgView
             src={previewImg}
             alt="프로필 이미지"

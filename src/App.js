@@ -3,6 +3,8 @@ import GlobalStyle from "./styles/globalStyle";
 import Landing from "./pages/Landing";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+import Profile from "./pages/Profile";
+import Recruit from "./pages/Recruit";
 
 const App = () => {
   return (
@@ -20,6 +22,14 @@ const App = () => {
         <Route
           path="/signup"
           element={<SignUp />}
+        />
+        <Route
+          path="/profile"
+          element={<Profile />}
+        />
+        <Route
+          path="/recruit"
+          element={<Recruit />}
         />
       </Routes>
     </>
