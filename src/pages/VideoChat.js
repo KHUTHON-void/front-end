@@ -89,11 +89,13 @@ const VideoChat = () => {
   };
 
   const toggleCamera = () => {
-    setCameraOn(!isCameraOn);
+    const newState = !isCameraOn
+    setCameraOn(newState);
   }
 
   const toggleMic = () => {
-    setMicOn(!isMicOn);
+    const newState = !isMicOn
+    setMicOn(newState);
   }
 
   useEffect(() => {
@@ -149,18 +151,22 @@ const VideoChat = () => {
           id="myVideo" 
           playsInLine 
           autoPlay
+          width="640px"
+          height="480px"
           ref={myVideoRef}/>
           <OpponentVideo 
           id="opponentVideo" 
           playsInLine 
           autoPlay
+          width="640px"
+          height="480px"
           ref={remoteVideoRef}/>
         </VideoContainer>
         <VideoConsole>
-          <CameraButton onClick={toggleCamera}>
+          <CameraButton onClick={toggleCamera} className={isCameraOn ? "On" : "Off"}>
             {isCameraOn ? 'Turn Off Camera' : 'Turn On Camera'}
           </CameraButton>
-          <MicButton onClick={toggleMic}>
+          <MicButton onClick={toggleMic} className={isMicOn ? "On" : "Off"}>
             {isMicOn ? 'Mute Mic' : 'Unmute Mic'}
           </MicButton>
         </VideoConsole>
@@ -183,19 +189,22 @@ const VideoContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
+  flex-direction: row;
+  height: 800px;
 `;
 
 
 const MyVideo = styled.video`
-  width = 800px;
-  height = 800px;
+  background: #8b8b8b;
+  margin: 10px;
+  border-radius: 10px;
+`;
+
+const OpponentVideo = styled.video`
   background: #8b8b8b;
   margin: 10px 0 10px 0;
   border-radius: 10px;
 `;
-
-const OpponentVideo = styled(MyVideo)``;
 
 const VideoConsole = styled.div`
   position: absolute;
@@ -204,6 +213,10 @@ const VideoConsole = styled.div`
   align-items: center;
   justify-content: center;
   width: 100vw;
+  .On {
+    background: #8b8b8b;
+    color: #313338;
+  }
 `;
 
 const CameraButton = styled.div`
