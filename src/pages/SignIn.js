@@ -2,9 +2,11 @@ import styled from "styled-components";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { requestSignIn } from "../utils/axios";
+import { useCookies } from "react-cookie";
 
 const SignIn = () => {
   const location = useLocation();
+  const [cookies, setCookie] = useCookies();
 
   const [signInInfo, setInitialInfo] = useState({
     email: "",
@@ -22,7 +24,7 @@ const SignIn = () => {
 
   //로그인 버튼 눌렀을 때 동작
   const handleSignIn = async () => {
-    requestSignIn(signInInfo, navigate);
+    requestSignIn(signInInfo, navigate, setCookie);
   };
 
   return (

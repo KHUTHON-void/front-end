@@ -34,7 +34,7 @@ export const requestSignUp = (initialInfo, profileImg, navigate, setCookie) => {
     });
 };
 
-export const requestSignIn = (signInInfo, navigate) => {
+export const requestSignIn = (signInInfo, navigate, setCookie) => {
   let config = {
     method: "post",
     url: "https://void-team.kro.kr/api/login",
@@ -44,6 +44,8 @@ export const requestSignIn = (signInInfo, navigate) => {
   axios
     .request(config)
     .then((response) => {
+      const token = response.headers.authorization;
+      setCookie("jwt-token", token, { path: "/", secure: true });
       navigate("/profile");
       console.log(response.data);
     })
@@ -52,7 +54,7 @@ export const requestSignIn = (signInInfo, navigate) => {
     });
 };
 
-export const getProfileInfo = (token, setProfileInfo) => {
+export const getProfileInfo = (token, setProfileInfo, setCookie) => {
   let config = {
     method: "get",
     url: "https://void-team.kro.kr/api/validate-jwt",
@@ -74,6 +76,28 @@ export const getProfileInfo = (token, setProfileInfo) => {
         grade: response.data.grade,
         nickname: response.data.nickname,
       });
+      setCookie("grade", response.data.grade);
+      setCookie("profileImg", profileImg);
+      setCookie("nickname", response.data.nickname);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+export const getAskPostList = (category, token) => {
+  let config = {
+    method: "get",
+    url: `https://void-team.kro.kr/api/rooms?category=${category}?sort=CHRONOLOGICAL`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  axios
+    .request(config)
+    .then((response) => {
+      console.log(response.data);
     })
     .catch((error) => {
       console.log(error);

@@ -1,9 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-const Filtering = () => {
-  const [activeFilter, setActiveFilter] = useState(null);
-
+const Filtering = ({ activeFilter, setActiveFilter }) => {
   const handleFilterClick = (filter) => {
     setActiveFilter(filter);
   };

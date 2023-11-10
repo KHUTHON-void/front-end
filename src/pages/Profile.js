@@ -11,7 +11,7 @@ import { TierReader } from "../utils/TierReader";
 
 const Profile = () => {
   const location = useLocation();
-  const [cookies] = useCookies();
+  const [cookies, setCookie] = useCookies();
   const token = cookies["jwt-token"];
   const [profileInfo, setProfileInfo] = useState({
     grade: "",
@@ -20,7 +20,7 @@ const Profile = () => {
   });
   // 초기 설정 (Mount시점에 API 호출)
   useEffect(() => {
-    getProfileInfo(token, setProfileInfo);
+    getProfileInfo(token, setProfileInfo, setCookie);
   }, []);
 
   const tier = TierReader(profileInfo.grade);
