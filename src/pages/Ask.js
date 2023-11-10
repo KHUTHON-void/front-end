@@ -70,9 +70,9 @@ const Ask = () => {
               }}
             >
               <ThumbnailBox>
-                {post.member.profileImg ? (
+                {post.member.profileImgUr ? (
                   <ThumbnailImg
-                    src={post.member.profileImg}
+                    src={post.member.profileImg[0]}
                     alt="Thumbnail"
                   />
                 ) : (
@@ -190,5 +190,5 @@ const ThumbnailImg = styled.img`
 const EmptyThumbnailImg = styled.div`
   width: 64px;
   height: 64px;
-  background: #f1f1f1;
+  background: #e3f2fd;
 `;

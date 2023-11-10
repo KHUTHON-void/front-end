@@ -18,7 +18,7 @@ import khu_logo from "../assets/khu_logo.png";
 import goldLogo from "../assets/gold.png";
 import WriteRecruitModal from "../components/WriteRecruitModal";
 
-const RecruitDetail = () => {
+const PostDetail = () => {
   const location = useLocation();
   const cookies = useCookies();
   const navigate = useNavigate();
@@ -189,7 +189,7 @@ const RecruitDetail = () => {
   );
 };
 
-export default RecruitDetail;
+export default PostDetail;
 
 const PageBody = styled.div`
   display: flex;
@@ -282,7 +282,7 @@ const CommentInputOutlay = styled.div`
   height: 100px;
   border: none;
   border-radius: 100px;
-  background: #f3e5f5;
+  background: #f1f1f1;
   padding: 50px;
   font-family: Pretendard;
   .input::-webkit-scrollbar {
@@ -297,7 +297,7 @@ const CommentInput = styled.textarea`
   resize: none;
   outline: none;
   align-items: center;
-  background: #f3e5f5;
+  background: #f1f1f1;
   padding: 10px;
   font-size: 1rem;
   font-family: Pretendard;
@@ -439,7 +439,7 @@ const EditCommentButton = styled.div`
   justify-content: center;
   right: 50px;
   top: 0px;
-  background: #ba68c8;
+  background: #7054ff;
   color: #ffffff;
   border-radius: 100px;
   width: 100px;
@@ -449,4 +449,11 @@ const EditCommentButton = styled.div`
     opacity: 0.3;
     transition: 0.3s;
   }
+`;
+
+const DeleteCommentButton = styled.div`
+  position: absolute;
+  right: 10px;
+  top: 0px;
+  cursor: pointer;
 `;

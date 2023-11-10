@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
-import Sidebar from '../components/Sidebar'
-import { Header } from '../components/Header'
-import Footer from '../components/Footer'
-import { bookmarkPost, getPostDetail, getPostList } from '../utils/axios'
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import Sidebar from "../components/Sidebar";
+import { Header } from "../components/Header";
+import Footer from "../components/Footer";
+import { bookmarkPost, getPostDetail, getPostList } from "../utils/axios";
 import { ReactComponent as BookmarkIcon } from "../assets/flag.svg";
-import { ReactComponent as WriteIcon } from "../assets/pen.svg"
-import { useNavigate } from 'react-router-dom'
+import { ReactComponent as WriteIcon } from "../assets/pen.svg";
+import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import WriteRecruitModal from '../components/WriteRecruitModal'
-import { DiaryList } from '../store/fakeData'
-import Filtering from '../components/Filtering'
+import WriteRecruitModal from "../components/WriteRecruitModal";
+import { DiaryList } from "../store/fakeData";
+import Filtering from "../components/Filtering";
 
 const Recruit = () => {
   const navigate = useNavigate();
@@ -19,83 +19,106 @@ const Recruit = () => {
   const grade = cookies["grade"];
   const nickname = cookies["nickname"];
   const profileImg = cookies["profileImg"];
-  const STATIC_URL = "https://void-team.kro.kr/api"
-  const [postList, setPostList] = useState([])
+  const STATIC_URL = "https://void-team.kro.kr/api";
+  const [postList, setPostList] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [searchContent, setsearchContent] = useState('')
-  const searchedList = searchContent === "" ? postList : postList.filter((post) =>
-    post.title.toLowerCase().includes(searchContent.toLowerCase()) === true
-  )
+  const [searchContent, setsearchContent] = useState("");
+  const searchedList =
+    searchContent === ""
+      ? postList
+      : postList.filter(
+          (post) => post.title.toLowerCase().includes(searchContent.toLowerCase()) === true
+        );
 
-const handleModalOpen = () => {
-  document.body.style.overflow = "hidden";
-  setIsModalOpen(true);
-};
+  const handleModalOpen = () => {
+    document.body.style.overflow = "hidden";
+    setIsModalOpen(true);
+  };
 
-const handleSearch = (e) => {
-  const newValue = e.currentTarget.value;
-  setsearchContent(newValue);
-}
+  const handleSearch = (e) => {
+    const newValue = e.currentTarget.value;
+    setsearchContent(newValue);
+  };
 
-useEffect(() => {
-  getPostList(token, setPostList);
-}, []);
+  useEffect(() => {
+    getPostList(token, setPostList);
+  }, []);
 
   return (
     <>
       <Header />
-      <WritePostButton onClick={handleModalOpen} >
-            <WriteIcon fill="white" width="40px" />
+      <WritePostButton onClick={handleModalOpen}>
+        <WriteIcon
+          fill="white"
+          width="40px"
+        />
       </WritePostButton>
       <BodyContainer>
         <Sidebar></Sidebar>
         <DiaryListContainer>
-        <Filtering />
-          {searchedList ? (searchedList.map((diary) => (
-            <DiaryBlock key={diary.recruitId}>
-              <DiaryHeader onClick={() => {getPostDetail(token, diary.recruitId, navigate)}}>
-                <ThumbnailBox>
-                  {diary.thumbnailImgURL ? <ThumbnailImg src={`${STATIC_URL + diary.thumbnailImgURL}`} alt="Thumbnail"/> : <EmptyThumbnailImg alt="EmptyThumbnail" />}
-                </ThumbnailBox>
-                <Title>{diary.title}</Title>
-              </DiaryHeader>
-              <DiaryBody onClick={() => {getPostDetail(token, diary.recruitId, navigate)}}>
-                <AuthorBlock>
-                  <AuthorProfileImg src={`${diary.member.profileImgURL}`} />
-                  <Author>{diary.member.nickname}</Author>
-                </AuthorBlock>
-                <DiaryInfoBlock>
-                  <ViewCount>조회수 {diary.viewCount}</ViewCount>
-                  <CommentCount>댓글 {diary.commentCount}</CommentCount>
-                </DiaryInfoBlock>
-              </DiaryBody>
-              <BookmarkIcon
-                  onClick={() => bookmarkPost(diary.diaryId)}
-                  className={diary.isBookmarked ? "Bookmarked Icon" : "Icon"}
-              />
-              </DiaryBlock>
-            ))): "Loading"}
-          </DiaryListContainer>
+          <Filtering />
+          {searchedList
+            ? searchedList.map((diary) => (
+                <DiaryBlock key={diary.recruitId}>
+                  <DiaryHeader
+                    onClick={() => {
+                      getPostDetail(token, diary.recruitId, navigate);
+                    }}
+                  >
+                    <ThumbnailBox>
+                      {diary.thumbnailImgURL ? (
+                        <ThumbnailImg
+                          src={`${STATIC_URL + diary.thumbnailImgURL}`}
+                          alt="Thumbnail"
+                        />
+                      ) : (
+                        <EmptyThumbnailImg alt="EmptyThumbnail" />
+                      )}
+                    </ThumbnailBox>
+                    <Title>{diary.title}</Title>
+                  </DiaryHeader>
+                  <DiaryBody
+                    onClick={() => {
+                      getPostDetail(token, diary.recruitId, navigate);
+                    }}
+                  >
+                    <AuthorBlock>
+                      <AuthorProfileImg src={`${diary.member.profileImgURL}`} />
+                      <Author>{diary.member.nickname}</Author>
+                    </AuthorBlock>
+                    <DiaryInfoBlock>
+                      <ViewCount>조회수 {diary.viewCount}</ViewCount>
+                      <CommentCount>댓글 {diary.commentCount}</CommentCount>
+                    </DiaryInfoBlock>
+                  </DiaryBody>
+                  <BookmarkIcon
+                    onClick={() => bookmarkPost(diary.diaryId)}
+                    className={diary.isBookmarked ? "Bookmarked Icon" : "Icon"}
+                  />
+                </DiaryBlock>
+              ))
+            : "Loading"}
+        </DiaryListContainer>
       </BodyContainer>
       <Footer />
       {isModalOpen && (
-            <WriteRecruitModal
-              setIsModalOpen={setIsModalOpen}
-              name={nickname}
-              profileImg={profileImg}
-              token={token}
-            />
-          )}
+        <WriteRecruitModal
+          setIsModalOpen={setIsModalOpen}
+          name={nickname}
+          profileImg={profileImg}
+          token={token}
+        />
+      )}
     </>
-  )
-}
+  );
+};
 
-export default Recruit
+export default Recruit;
 
 const WritePostButton = styled.div`
   right: 10vw;
   bottom: 10vh;
-  position : fixed;
+  position: fixed;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -171,14 +194,13 @@ const ThumbnailImg = styled.img`
 const EmptyThumbnailImg = styled.div`
   width: 64px;
   height: 64px;
-  background: #f1f1f1
+  background: #e3f2fd;
 `;
 
 const AuthorBlock = styled.div`
   display: flex;
   align-items: center;
   margin-right: 10px;
-  
 `;
 
 const AuthorProfileImg = styled.img`

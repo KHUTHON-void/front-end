@@ -7,7 +7,6 @@ import VideoChat from "./pages/VideoChat";
 import Profile from "./pages/Profile";
 import Recruit from "./pages/Recruit";
 import Ask from "./pages/Ask";
-import VideoChat2 from "./pages/VideoChat2";
 import RecruitDetail from "./pages/RecruitDetail";
 import AskDetail from "./pages/AskDetail";
 

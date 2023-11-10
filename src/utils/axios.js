@@ -177,15 +177,15 @@ export const getPostDetail = (token, postId, navigate) => {
   };
 
   axios
-  .request(config)
-  .then((response) => {
-    console.log(response.data);
-    const post = response.data;
-    navigate(`/recruit/${post.recruitId}`, { state : post})
-  })
-  .catch((error) => {
-    console.log(error);
-  });
+    .request(config)
+    .then((response) => {
+      console.log(response.data);
+      const post = response.data;
+      navigate(`/recruit/${post.recruitId}`, { state: post });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
 export const bookmarkPost = () => {};
@@ -234,9 +234,7 @@ export const getAskPostDetail = (id, token, navigate) => {
     });
 };
 
-export const deletePost = () => {
-
-};
+export const deletePost = () => {};
 
 export const getCommentList = () => {};
 
